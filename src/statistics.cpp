@@ -14,7 +14,7 @@ void require_confidence(double confidence) {
     }
 }
 
-}  // namespace
+}
 
 Summary summarize(std::span<const double> sample) {
     if (sample.empty()) {
@@ -85,4 +85,4 @@ double expected_shortfall(std::span<const double> pnl, double confidence) {
     return -sum / static_cast<double>(count);  // count >= 1: the minimum is always <= threshold
 }
 
-}  // namespace fxmc
+}

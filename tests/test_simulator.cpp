@@ -14,7 +14,7 @@ namespace {
 
 const GbmParams kGbm{100.0, 0.16, 0.04, 0.15};
 
-}  // namespace
+}
 
 TEST(Simulator, SameSeedIsReproducible) {
     const GbmModel model(kGbm);

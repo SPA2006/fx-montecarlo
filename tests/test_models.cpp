@@ -27,7 +27,7 @@ std::vector<double> logs(const std::vector<double>& rates) {
     return out;
 }
 
-}  // namespace
+}
 
 TEST(GbmModel, TerminalMeanMatchesForward) {
     const GbmModel model(kGbm);

@@ -17,7 +17,7 @@ TEST(Statistics, SummaryOfKnownSample) {
 }
 
 TEST(Statistics, QuantileInterpolatesLinearly) {
-    const std::vector<double> x{5, 1, 4, 2, 3};  // sorted: 1 2 3 4 5
+    const std::vector<double> x{5, 1, 4, 2, 3};
     EXPECT_DOUBLE_EQ(fxmc::quantile(x, 0.0), 1.0);
     EXPECT_DOUBLE_EQ(fxmc::quantile(x, 0.5), 3.0);
     EXPECT_DOUBLE_EQ(fxmc::quantile(x, 1.0), 5.0);
@@ -26,7 +26,7 @@ TEST(Statistics, QuantileInterpolatesLinearly) {
 
 TEST(Statistics, VarAndExpectedShortfall) {
     std::vector<double> pnl;
-    for (int i = -50; i <= 49; ++i) {  // 100 equally likely outcomes: -50 .. 49
+    for (int i = -50; i <= 49; ++i) {
         pnl.push_back(i);
     }
     const double var95 = fxmc::value_at_risk(pnl, 0.95);

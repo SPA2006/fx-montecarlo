@@ -13,7 +13,7 @@ void require(bool condition, const char* message) {
     }
 }
 
-}  // namespace
+}
 
 GbmModel::GbmModel(const GbmParams& params) : params_(params) {
     require(std::isfinite(params.spot) && params.spot > 0.0, "GBM: spot must be positive");
@@ -61,4 +61,4 @@ OuLogModel::Step OuLogModel::stepper(double dt) const noexcept {
                 s * std::sqrt((1.0 - std::exp(-2.0 * k * dt)) / (2.0 * k))};
 }
 
-}  // namespace fxmc
+}

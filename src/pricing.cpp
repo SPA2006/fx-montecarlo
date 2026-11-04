@@ -18,7 +18,7 @@ double payoff(OptionType type, double rate, double strike) {
     return type == OptionType::Call ? std::max(rate - strike, 0.0) : std::max(strike - rate, 0.0);
 }
 
-}  // namespace
+}
 
 double forward_rate(double spot, double domestic_rate, double foreign_rate,
                     double maturity) noexcept {
@@ -86,4 +86,4 @@ McEstimate mc_european_option(const GbmModel& model, OptionType type, double str
     return mc_european_option(terminal, type, strike, discount, config.antithetic);
 }
 
-}  // namespace fxmc
+}

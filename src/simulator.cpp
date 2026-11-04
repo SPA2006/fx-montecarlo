@@ -20,4 +20,4 @@ void SimulationConfig::validate() const {
     }
 }
 
-}  // namespace fxmc
+}
