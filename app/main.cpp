@@ -14,6 +14,7 @@
 
 /**
  * @brief Demo entry point.
+ * @return 0 on success.
  */
 int main() {
     // Illustrative USD/RUB-style setup: RUB per 1 USD, domestic = RUB, foreign = USD.
