@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+# Explicit bash enables `-o pipefail`, so a failing command piped into `tee` fails the step.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-test:
+    name: Build & test (${{ matrix.compiler.name }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - { name: gcc,   cxx: g++ }
+          - { name: clang, cxx: clang++ }
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install Ninja
+        run: sudo apt-get update && sudo apt-get install -y ninja-build
+
+      - name: Configure
+        run: >
+          cmake -S . -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }}
+
+      - name: Build
+        run: cmake --build build -j
+
+      - name: Unit tests
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Run demo
+        run: ./build/fxmc_demo
+
+  benchmark:
+    name: Benchmark
+    needs: build-test
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install Ninja
+        run: sudo apt-get update && sudo apt-get install -y ninja-build
+
+      - name: Configure & build (Release, no tests)
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DFXMC_BUILD_TESTS=OFF
+          cmake --build build -j --target fxmc_bench
+
+      - name: Run benchmark
+        run: |
+          ./build/bench/fxmc_bench \
+            --benchmark_min_time=0.2s \
+            --benchmark_repetitions=3 \
+            --benchmark_report_aggregates_only=true \
+            --benchmark_out=bench.json --benchmark_out_format=json \
+            | tee bench.txt
+
+      - name: Publish results to run summary
+        run: |
+          {
+            echo "## Benchmark results"
+            echo
+            echo '```'
+            cat bench.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload raw results
+        uses: actions/upload-artifact@v6
+        with:
+          name: benchmark-results
+          path: |
+            bench.txt
+            bench.json

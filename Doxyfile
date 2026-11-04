@@ -1,0 +1,38 @@
+# Doxygen configuration for the fx-montecarlo project.
+# Only non-default settings are listed; run `doxygen -g` to see all options.
+# Output: apidocs/html/index.html
+
+PROJECT_NAME           = "fx-montecarlo"
+PROJECT_BRIEF          = "Monte Carlo simulation of exchange rates (C++20)"
+PROJECT_NUMBER         = 0.1.0
+OUTPUT_DIRECTORY       = apidocs
+CREATE_SUBDIRS         = NO
+
+INPUT                  = README.md include src app
+FILE_PATTERNS          = *.hpp *.cpp *.md
+RECURSIVE              = YES
+USE_MDFILE_AS_MAINPAGE = README.md
+EXCLUDE_SYMBOLS        = std::*
+
+EXTRACT_ALL            = NO
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+JAVADOC_AUTOBRIEF      = YES
+BUILTIN_STL_SUPPORT    = YES
+SOURCE_BROWSER         = YES
+STRIP_FROM_PATH        = .
+STRIP_FROM_INC_PATH    = include
+
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+GENERATE_TREEVIEW      = YES
+HTML_COLORSTYLE        = LIGHT
+HAVE_DOT               = NO
+
+QUIET                  = YES
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_NO_PARAMDOC       = YES
+WARN_AS_ERROR          = FAIL_ON_WARNINGS
+USE_MATHJAX            = YES
+MATHJAX_VERSION        = MathJax_3
